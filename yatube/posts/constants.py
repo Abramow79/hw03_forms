@@ -1,0 +1,1 @@
+NUMBER: int = 10

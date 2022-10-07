@@ -1,0 +1,48 @@
+{% extends 'base.html' %} 
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+{% block header %}
+{{ group.title }}
+{% endblock %}
+<head>       
+  {% block title %}
+  <title>Записи сообщества {{ group.title }}</title>
+  {% endblock %}
+</head>
+
+<main>
+{% block content %}
+      <div class="container py-5">
+          {% if group.description %}
+          <p>
+            {{ group.description }}
+          </p>
+        {% endif %}
+  {% for post in page_obj %}
+   <ul>
+    <li>
+      Автор: {{ post.author.get_full_name }}
+    </li>
+    <li>
+      Дата публикации: {{ post.pub_date|date:"d E Y"}}
+    </li>
+  </ul>
+  <p>{{ post.text }}</p>    
+   {% if not forloop.last %}<hr>{% endif %}
+  {% endfor %} 
+      </div>  
+      {% include 'posts/includes/paginator.html' %}
+      {% endblock %}
+      
+        </p>
+    </main>
+    <footer>
+      {% block footer %}
+      <footer class="border-top text-center py-3">
+        <p>© {{ year }} Copyright <span style="color:red"><br>Ya</span>tube</p>    
+      </footer> 
+
+      {% endblock %}
+    </footer>
+</html>
