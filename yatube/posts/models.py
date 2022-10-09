@@ -5,31 +5,50 @@ User = get_user_model()
 
 
 class Group(models.Model):
-    title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True)
-    description = models.TextField()
+    title = models.CharField(
+        max_length=200,
+        verbose_name='Название сообщества'
+    )
+    slug = models.SlugField(
+        unique=True,
+        verbose_name='адрес'
+    )
+    description = models.TextField(verbose_name='описание')
 
     def __str__(self):
-        return f'{self.title}'
+        return self.title
+
+    class Meta:
+        verbose_name = 'Сообщество'
+        verbose_name_plural = 'Сообщества'
+        ordering = ('title',)
 
 
 class Post(models.Model):
-    text = models.TextField()
-    pub_date = models.DateTimeField(auto_now_add=True)
+    text = models.TextField(verbose_name='Запись')
+    pub_date = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Дата публикации'
+    )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='posts')
+        related_name='posts',
+        verbose_name='автор'
+    )
     group = models.ForeignKey(
-        'Group',
+        Group,
         blank=True,
         null=True,
         on_delete=models.SET_NULL,
-        related_name='posts'
+        related_name='posts',
+        verbose_name='Сообщество'
     )
 
     def __str__(self) -> str:
-        return self.text
+        return self.text[:20]
 
     class Meta:
-        ordering = ['-pub_date']
+        verbose_name = 'Запись'
+        verbose_name_plural = 'Записи'
+        ordering = ('-pub_date',)

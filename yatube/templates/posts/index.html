@@ -1,38 +1,25 @@
 {% extends 'base.html' %} 
-{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>       
-  {% block title %}
-  <title>Последние обновления на сайте</title>
-  {% endblock %}
+  {% block title %}Последние обновления на сайте{% endblock %}
 </head>
-
-  <main> 
-  {% block content %}
+<main> 
+{% block content %}
   <h1>Последние обновления на сайте</h1>
   {% for post in page_obj %}
     <ul>
       <li>
-      Автор: {{ post.author.get_full_name }}
-    </li>
-    <li>
-      Дата публикации: {{ post.pub_date|date:"d E Y" }}
-    </li>
-  </ul>
-  <p>{{ post.text }}</p>    
-  <a href="http://127.0.0.1:8000/group/literature/">все записи группы</a>
-  
-  {% if not forloop.last %}<hr>{% endif %}
+        Автор: {{ post.author.get_full_name }}
+        <a href="{% url 'posts:profile' post.author.username %}">все посты пользователя</a>
+      </li>
+      <li>Дата публикации: {{ post.pub_date|date:"d E Y" }} </li>
+    </ul>
+    <p>{{ post.text|linebreaksbr }}</p>    
+    <a href="{% url 'posts:post_detail' post.id %}">подробная информация</a>
+    {% if not forloop.last %}<hr>{% endif %}
   {% endfor %} 
-
   {% include 'posts/includes/paginator.html' %}
-
-    {% endblock %}
+{% endblock %}
 </main>
 </html>
-
-
-
-
