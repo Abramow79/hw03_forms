@@ -11,17 +11,17 @@ class Group(models.Model):
     )
     slug = models.SlugField(
         unique=True,
-        verbose_name='URL'
+        verbose_name='Обозначение группы'
     )
     description = models.TextField(verbose_name='описание')
-
-    def __str__(self):
-        return self.title
 
     class Meta:
         verbose_name = 'Сообщество'
         verbose_name_plural = 'Сообщества'
         ordering = ('title',)
+
+    def __str__(self):
+        return self.title
 
 
 class Post(models.Model):
