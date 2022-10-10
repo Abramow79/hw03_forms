@@ -11,7 +11,7 @@ class Group(models.Model):
     )
     slug = models.SlugField(
         unique=True,
-        verbose_name='адрес'
+        verbose_name='URL'
     )
     description = models.TextField(verbose_name='описание')
 
@@ -25,7 +25,7 @@ class Group(models.Model):
 
 
 class Post(models.Model):
-    text = models.TextField(verbose_name='Запись')
+    text = models.TextField(verbose_name='Текст')
     pub_date = models.DateTimeField(
         auto_now_add=True,
         verbose_name='Дата публикации'
@@ -45,10 +45,10 @@ class Post(models.Model):
         verbose_name='Сообщество'
     )
 
-    def __str__(self) -> str:
-        return self.text[:20]
-
     class Meta:
         verbose_name = 'Запись'
         verbose_name_plural = 'Записи'
         ordering = ('-pub_date',)
+
+    def __str__(self) -> str:
+        return self.text[:20]

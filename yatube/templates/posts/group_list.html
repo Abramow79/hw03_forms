@@ -1,6 +1,6 @@
 {% extends 'base.html' %} 
 {% block header %}{{ group.title }}{% endblock %}
-{% block title %}Записи сообщества{{ group.title }}{% endblock %}
+{% block title %}Записи сообщества {{ group.title }}{% endblock %}
 {% block content %}
   <div class="container py-5">
     {% if group.description %}
@@ -8,8 +8,9 @@
     {% endif %}
     {% for post in page_obj %}
       <ul>
-        <li>Автор: {{ post.author.get_full_name }}</li>
-        <a href="{% url 'posts:profile' post.author.username %}">все посты пользователя</a>
+        <li>
+          Автор: <a href="{% url 'posts:profile' post.author.username %}">{{ post.author.get_full_name }}</a>     
+        </li>
         <li>Дата публикации: {{ post.pub_date|date:"d E Y"}}</li>
       </ul>
       <p>{{ post.text|linebreaksbr }}</p>    
@@ -17,8 +18,4 @@
     {% endfor %} 
   </div>  
   {% include 'posts/includes/paginator.html' %}
-{% endblock %}
-{% block footer %}
-  <footer class="border-top text-center py-3"><p>© {{ year }} Copyright <span style="color:red"><br>Ya</span>tube</p>    
-  </footer> 
 {% endblock %}

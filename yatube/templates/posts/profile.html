@@ -3,24 +3,30 @@
 {% block header %}Все посты пользователя {{ author.get_full_name }}
 {% endblock %}
 {% block content %}
+<ul>
   <h3>Всего постов: {{ author.posts.count }}</h3>
   {% for post in page_obj %}
-    <article>
-      <ul>
-        <li>
-          Автор: {{ author.get_full_name }}
-        </li>
-        <li>Дата публикации: {{ post.pub_date|date:"d E Y" }}</li>
-      </ul>
-      <p>
-        {{ post.text|linebreaksbr }}
-      </p>
-      <a href="{% url 'posts:post_detail' post.id %}">подробная информация</a>
-    </article>
-    {% if post.group %}
-      <a href="{% url 'posts:group_posts' post.group.slug %}">все записи группы {{ post.group }}</a>
-    {% endif %}
+    <p>
+      <article>
+        <ul>
+          <li>Автор: {{ author.get_full_name }}</li>
+          <li>Дата публикации: {{ post.pub_date|date:"d E Y" }}</li>
+          <p>
+            <p>
+              {% if post.group %}
+                <a href="{% url 'posts:group_posts' post.group.slug %}">#{{ post.group }}</a>
+              {% endif %}
+            </p>
+          </p> 
+        </ul>
+        <p>
+          <p>{{ post.text|linebreaksbr }}</p>
+        </p>
+        <a href="{% url 'posts:post_detail' post.id %}">подробная информация</a>
+      </article>
+    </p>  
     {% if not forloop.last %}<hr>{% endif %}
   {% endfor %}
   {% include 'posts/includes/paginator.html' %}
+</ul>
 {% endblock %}
